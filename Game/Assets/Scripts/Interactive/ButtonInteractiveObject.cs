@@ -7,7 +7,7 @@ namespace Interactive
 {
     public abstract class ButtonInteractiveObject : MonoBehaviour
     {
-        [SerializeField] private GameObject triggerObject;
+        [SerializeField] protected GameObject triggerObject;
 
         [SerializeField] private float triggerDistance;
 
@@ -41,7 +41,7 @@ namespace Interactive
             interacting = false;
         }
 
-        private GameObject currentText;
+        protected GameObject currentText;
 
         private void Start()
         {
@@ -59,10 +59,7 @@ namespace Interactive
                     Debug.Log("Triggered");
                     triggered = true;
 
-                    Vector3 position = transform.position + Vector3.up;
-                    Vector2 textPosition = Camera.main.WorldToScreenPoint(position);
-
-                    currentText = Instantiate(inviteTextPrefab, textPosition, Quaternion.identity,
+                    currentText = Instantiate(inviteTextPrefab, TextPosition, Quaternion.identity,
                         canvasObject.transform);
                     currentText.GetComponent<Text>().text = inviteText;
                     
@@ -86,5 +83,18 @@ namespace Interactive
                 yield return null;
             }
         }
+
+
+        protected Vector2 TextPosition
+        {
+            get
+            {
+                Vector3 position = transform.position + Vector3.up;
+                Vector2 textPosition = Camera.main.WorldToScreenPoint(position);
+
+                return textPosition;
+            }
+        }
+        
     }
 }
