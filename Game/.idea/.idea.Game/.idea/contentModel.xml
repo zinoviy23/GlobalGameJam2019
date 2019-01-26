@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Alexandr\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Alexandr\.Rider2018.2\system\resharper-host\Local\Transient\ReSharperHost\v182\SolutionCaches\_Game.-1713719093.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Alexandr\Proga\NewProga\GlobalGameJam2019\Game" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="FaceApiScript.cs" t="Include" />
+          <e p="Interactive" t="Include">
+            <e p="ButtonInteractiveObject.cs" t="Include" />
+            <e p="InteractiveObject.cs" t="Include" />
+          </e>
+          <e p="SimpleNPC.cs" t="Include" />
+          <e p="TakeCupOfTea.cs" t="Include" />
+          <e p="Toast.cs" t="Include" />
+          <e p="WebCamScript.cs" t="Include" />
+        </e>
+        <e p="SimpleWalker.cs" t="Include" />
+      </e>
+      <e p="Game.sln" t="IncludeFlat" />
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>
