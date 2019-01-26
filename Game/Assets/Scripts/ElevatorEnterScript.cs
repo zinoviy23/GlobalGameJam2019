@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
 {
-    [SerializeField] private KeyCode upButton;
-    [SerializeField] private KeyCode downButton;
-    [SerializeField] private KeyCode exitButton;
+    [SerializeField] private string upButtonAxis;
+    [SerializeField] private string downButtonAxis;
+    [SerializeField] private string exitButton;
     [SerializeField] private float speed;
     [SerializeField] private int maxFloor;
     [SerializeField] private int minFloor;
@@ -39,21 +40,21 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         {
             yield return new WaitWhile(() => isRiding);
 
-            if (Input.GetKey(upButton) && currentFloor != maxFloor)
+            if (Input.GetAxisRaw(upButtonAxis) > 0.01 && currentFloor != maxFloor)
             {
                 StartCoroutine(Ride(1));
                 currentFloor++;
                 continue;
             }
             
-            if (Input.GetKey(downButton) && currentFloor != minFloor)
+            if (Input.GetAxisRaw(downButtonAxis) < -0.01 && currentFloor != minFloor)
             {
                 StartCoroutine(Ride(-1));
                 currentFloor--;
                 continue;
             }
 
-            if (Input.GetKey(exitButton))
+            if (Input.GetButton(exitButton))
             {
                 isExit = true;
             }
@@ -85,6 +86,7 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         }
 
         currentText.transform.position = TextPosition;
+        yield return new WaitForSeconds(0.1f);
         currentText.SetActive(true);
         isRiding = false;
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,13 +12,15 @@ namespace Interactive
 
         [SerializeField] private float triggerDistance;
 
-        [SerializeField] private KeyCode triggerButton;
+        [SerializeField] private string triggerButton;
 
         [SerializeField] private GameObject canvasObject;
 
         [SerializeField] private GameObject inviteTextPrefab;
 
         [SerializeField] private string inviteText;
+
+        [SerializeField] private Vector2 textOffset;
 
         protected abstract IEnumerator Interact();
 
@@ -54,14 +57,19 @@ namespace Interactive
             {
                 yield return new WaitWhile(() => interacting);
                 
+                if (currentText != null)
+                    Debug.Log(currentText.transform.position + " " + transform.position);
+                
                 if ((triggerObject.transform.position - transform.position).magnitude < triggerDistance && !triggered)
                 {
                     Debug.Log("Triggered");
                     triggered = true;
 
+                    yield return new WaitForSeconds(0.1f);
                     currentText = Instantiate(inviteTextPrefab, TextPosition, Quaternion.identity,
                         canvasObject.transform);
                     currentText.GetComponent<Text>().text = inviteText;
+                    currentText.SetActive(true);
                     
                     Debug.Log("Created: " + currentText);
                 }
@@ -75,7 +83,7 @@ namespace Interactive
                     currentText = null;
                 }
 
-                if (triggered && Input.GetKey(triggerButton))
+                if (triggered && Input.GetButton(triggerButton))
                 {
                     StartCoroutine(Interact());
                 }
@@ -89,7 +97,7 @@ namespace Interactive
         {
             get
             {
-                Vector3 position = transform.position + Vector3.up;
+                Vector3 position = transform.position + (Vector3)textOffset;
                 Vector2 textPosition = Camera.main.WorldToScreenPoint(position);
 
                 return textPosition;
