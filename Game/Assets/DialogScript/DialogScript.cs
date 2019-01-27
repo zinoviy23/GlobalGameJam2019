@@ -22,9 +22,14 @@ public class DialogScript : MonoBehaviour {
 
     public string nextPhrase()
     {
-        condition++;
-        if (condition == maxPhrase) endDialog = true;
-        return textScript.getPhrase(condition);
+        if (!endDialog)
+        {
+            condition++;
+            if (condition == maxPhrase) endDialog = true;
+            return textScript.getPhrase(condition);
+        }
+        return "None";
+
     }
 
     public void setDialog(TextScript ts) {

@@ -9,7 +9,6 @@ public class TextScript {
 
     public TextScript(string[] mas)
     {
-        masPhrase = mas;
         maxPhrase = masPhrase.Length;
     }
 
