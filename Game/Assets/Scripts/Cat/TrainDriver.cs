@@ -11,7 +11,7 @@ public class TrainDriver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = new Vector2(10.56f, 1.51f);
+        target = new Vector2(10.56f, 1.31f);
         position = gameObject.transform.position;
     }
 

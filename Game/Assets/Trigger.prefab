@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6011121544674889395}
   - component: {fileID: 6011121544674889392}
   - component: {fileID: 6011121544674889399}
+  - component: {fileID: 2004906562397489849}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -236,3 +237,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2004906562397489849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6011121544674889393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 016d17b99d0f8464b99b774088cd27c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
