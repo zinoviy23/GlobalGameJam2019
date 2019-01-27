@@ -32,7 +32,6 @@ public class SimpleWalker : MonoBehaviour
             spriteRenderer.flipX = true;
         
         animator.SetFloat(speedHash, rigidbody2D.velocity.magnitude);
-        Debug.Log(animator.GetFloat(speedHash));
     }
 
     public void Flip(bool flip)

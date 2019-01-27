@@ -1,4 +1,5 @@
 using System.Collections;
+using Interactive;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,14 @@ namespace Doctor
     [RequireComponent(typeof(DialogScript))]
     public class SpeakingDoctor : Interactive.ButtonInteractiveObject
     {
-        [SerializeField] private GameObject attackableDoctor;
+        [SerializeField] private GameObject nextStep;
         [SerializeField] private Color textColor;
+        [SerializeField] private bool isLooping;
+        [SerializeField] private bool nextStepAfterFirstInteraction;
 
         private DialogScript dialog;
+
+        private string current;
         
         protected override IEnumerator Interact()
         {
@@ -24,27 +29,31 @@ namespace Doctor
             string prevText = InviteText;
             Color prevColor = TextColor;
             TextColor = textColor;
-
-            string current = dialog.nextPhrase();
-
-            bool destroy = false;
-            if (current != null)
-                InviteText = current;
-            else
-                destroy = true;
             
-            if (!destroy)
-                yield return new WaitForSeconds(2f);
+            if (current == null || !isLooping)
+                current = dialog.nextPhrase();
+                
+            bool destroy = !isLooping && dialog.endDialog;
+            
+            Debug.Log(destroy + " " + current);
+            InviteText = current;
+            
+            yield return new WaitForSeconds(2f);
 
             InviteText = prevText;
             TextColor = prevColor;
 
             triggerObject.GetComponent<SimpleWalker>().enabled = true;
 
-            if (destroy)
+            if (destroy || nextStepAfterFirstInteraction)
             {
-                attackableDoctor.SetActive(true);
-                DestroyThisObject();
+                if (!nextStep.activeSelf)
+                    nextStep.SetActive(true);
+                else if (!nextStep.GetComponent<ButtonInteractiveObject>().enabled)
+                    nextStep.GetComponent<ButtonInteractiveObject>().enabled = true;
+                
+                if (destroy)
+                    DestroyThisObject();
             }
 
             FinishInteracting();
@@ -53,6 +62,12 @@ namespace Doctor
         private void Awake()
         {
             dialog = GetComponent<DialogScript>();
+        }
+
+        public void SetText(params string[] str)
+        {
+            dialog.textScript = new TextScript(str);
+            dialog.maxPhrase = str.Length - 1;
         }
     }
 }
