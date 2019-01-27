@@ -45,6 +45,7 @@ namespace SpeakingCat
                 //attackableDoctor.SetActive(true);
                 train.GetComponent<BoxCollider2D>().isTrigger = true;
                 cat.SetActive(true);
+                cat.GetComponent<SpeakingCat>().enabled = true;
                 DestroyThisObject();
             }
 
