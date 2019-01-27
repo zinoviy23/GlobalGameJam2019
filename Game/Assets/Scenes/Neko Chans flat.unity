@@ -641,7 +641,7 @@ MonoBehaviour:
   inviteTextPrefab: {fileID: 621241628}
   inviteText: Press X to talk
   textOffset: {x: 0, y: 1.1}
-  train: {fileID: 519486717}
+  train: {fileID: 874228372}
   cat: {fileID: 473635464}
 --- !u!1 &519486717
 GameObject:
@@ -696,7 +696,7 @@ MonoBehaviour:
   inviteTextPrefab: {fileID: 621241628}
   inviteText: Press X to leave on the train
   textOffset: {x: 0, y: 1.1}
-  train: {fileID: 519486717}
+  train: {fileID: 874228372}
   cat: {fileID: 473635464}
 --- !u!4 &519486720
 Transform:
@@ -2309,6 +2309,16 @@ PrefabInstance:
       propertyPath: floorHeight
       value: 2.6
       objectReference: {fileID: 0}
+    - target: {fileID: 8282268113092075892, guid: 02131d79ca14273429b7c85c546f9ee2,
+        type: 3}
+      propertyPath: maxFloor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282268113092075892, guid: 02131d79ca14273429b7c85c546f9ee2,
+        type: 3}
+      propertyPath: minFloor
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02131d79ca14273429b7c85c546f9ee2, type: 3}
 --- !u!1 &1636557433
@@ -2765,7 +2775,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toDisable:
   - {fileID: 473635464}
-  - {fileID: 519486717}
   - {fileID: 1176919252}
   train: {fileID: 874228372}
 --- !u!114 &1997686657
