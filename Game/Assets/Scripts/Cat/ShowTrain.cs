@@ -23,6 +23,7 @@ public class ShowTrain : MonoBehaviour
         if (other.gameObject.name == "ЖД")
         {
             train.SetActive(true);
+            train.GetComponent<TrainDriver>().StartTrain();
         }
     }
 }
