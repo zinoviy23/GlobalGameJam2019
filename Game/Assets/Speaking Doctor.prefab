@@ -102,8 +102,10 @@ MonoBehaviour:
   inviteText: X to talk
   textOffset: {x: 0, y: 0.67}
   initialTextColor: {r: 0, g: 0, b: 0, a: 1}
-  attackableDoctor: {fileID: 0}
+  nextStep: {fileID: 0}
   textColor: {r: 0, g: 0, b: 0, a: 1}
+  isLooping: 0
+  nextStepAfterFirstInteraction: 0
 --- !u!114 &1715865337550076406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bfa47999808488ba4b7a87e8235aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  condition: 0
   textScript:
     masPhrase:
     - Hello
@@ -123,4 +126,5 @@ MonoBehaviour:
     - You are welcome!
     - But now, hit me!
     - Be angry as you can!
+  maxPhrase: 0
   endDialog: 0
