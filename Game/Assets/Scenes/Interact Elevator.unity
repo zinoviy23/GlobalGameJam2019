@@ -269,7 +269,7 @@ PrefabInstance:
     - target: {fileID: 6131214114075451582, guid: d51e0b00adfc44446a4ea449d657b352,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d51e0b00adfc44446a4ea449d657b352, type: 3}
@@ -852,7 +852,7 @@ MonoBehaviour:
   leftDoorName: Elevator Door Left
   rightDoorName: Elevator Door Right
   openedDoorLayer: Elevator Door Opened
-  closedDoorLayer: Elevator Door Closed
+  closedDoorLayer: Doors
   doorsOffset: 0.5
 --- !u!1 &2083158126
 GameObject:
@@ -1037,7 +1037,7 @@ PrefabInstance:
     - target: {fileID: 8334320269735143203, guid: d6a62bb347f35d249ba2b3807221a876,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6a62bb347f35d249ba2b3807221a876, type: 3}
