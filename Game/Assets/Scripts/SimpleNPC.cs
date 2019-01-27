@@ -11,7 +11,6 @@ public class SimpleNPC : Interactive.ButtonInteractiveObject
         Debug.Log("Hello");
         yield return new WaitForSeconds(1);
         FinishInteracting();
-        yield break;
     }
 }
    

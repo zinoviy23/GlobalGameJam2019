@@ -1,19 +1,26 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class DoorScript : Interactive.ButtonInteractiveObject
 {
     [SerializeField] private bool isOpen;
     [SerializeField] private Sprite openedDoor;
     [SerializeField] private Sprite closedDoor;
+    [SerializeField] private float width;
+    [SerializeField] private string toOpenInvite;
+    [SerializeField] private string toCloseInvite;
 
     private SpriteRenderer spriteRenderer;
+    private Transform child;
+    private new Collider2D collider;
     
     protected override IEnumerator Interact()
     {
-        yield return new WaitForSeconds(0.2f);
+        StartInteracting();
+        yield return new WaitForSeconds(0.5f);
         IsOpen = !IsOpen;
+        yield return new WaitForSeconds(0.5f);
+        FinishInteracting();
     }
 
     public bool IsOpen
@@ -24,11 +31,16 @@ public class DoorScript : Interactive.ButtonInteractiveObject
             isOpen = value;
 
             spriteRenderer.sprite = isOpen ? openedDoor : closedDoor;
+            child.transform.position += (isOpen ? -1 : 1) * width * Vector3.right;
+            collider.isTrigger = isOpen;
+            InviteText = isOpen ? toCloseInvite : toOpenInvite;
         }
     }
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        child = transform.GetChild(0);
+        spriteRenderer = child.GetComponent<SpriteRenderer>();
+        collider = GetComponent<Collider2D>();
     }
 }

@@ -41,3 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Elevator Door Opened
+    uniqueID: 1105722769
+    locked: 0
+  - name: Background
+    uniqueID: 2182631869
+    locked: 0
+  - name: Elevator Door Closed
+    uniqueID: 2713965379
+    locked: 0
+  - name: Furniture
+    uniqueID: 2322323933
+    locked: 0
+  - name: Player
+    uniqueID: 1865460937
+    locked: 0
+  - name: Doors
+    uniqueID: 4208357375
+    locked: 0

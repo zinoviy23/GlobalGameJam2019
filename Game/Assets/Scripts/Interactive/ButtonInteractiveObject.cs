@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,17 +8,19 @@ namespace Interactive
 {
     public abstract class ButtonInteractiveObject : MonoBehaviour
     {
-        [SerializeField] private GameObject triggerObject;
+        [SerializeField] protected GameObject triggerObject;
 
         [SerializeField] private float triggerDistance;
 
-        [SerializeField] private KeyCode triggerButton;
+        [SerializeField] private string triggerButton;
 
         [SerializeField] private GameObject canvasObject;
 
         [SerializeField] private GameObject inviteTextPrefab;
 
         [SerializeField] private string inviteText;
+
+        [SerializeField] private Vector2 textOffset;
 
         protected abstract IEnumerator Interact();
 
@@ -41,7 +44,7 @@ namespace Interactive
             interacting = false;
         }
 
-        private GameObject currentText;
+        protected GameObject currentText;
 
         private void Start()
         {
@@ -59,12 +62,11 @@ namespace Interactive
                     Debug.Log("Triggered");
                     triggered = true;
 
-                    Vector3 position = transform.position + Vector3.up;
-                    Vector2 textPosition = Camera.main.WorldToScreenPoint(position);
-
-                    currentText = Instantiate(inviteTextPrefab, textPosition, Quaternion.identity,
+                    yield return new WaitForSeconds(0.1f);
+                    currentText = Instantiate(inviteTextPrefab, TextPosition, Quaternion.identity,
                         canvasObject.transform);
-                    currentText.GetComponent<Text>().text = inviteText;
+                    currentText.GetComponent<Text>().text = InviteText;
+                    currentText.SetActive(true);
                     
                     Debug.Log("Created: " + currentText);
                 }
@@ -78,12 +80,37 @@ namespace Interactive
                     currentText = null;
                 }
 
-                if (triggered && Input.GetKey(triggerButton))
+                if (triggered && Input.GetButton(triggerButton))
                 {
+                    Debug.Log("Interact");
                     StartCoroutine(Interact());
                 }
 
                 yield return null;
+            }
+        }
+
+
+        protected Vector2 TextPosition
+        {
+            get
+            {
+                Vector3 position = transform.position + (Vector3)textOffset;
+                Vector2 textPosition = Camera.main.WorldToScreenPoint(position);
+
+                return textPosition;
+            }
+        }
+
+
+        public string InviteText
+        {
+            get { return inviteText; }
+            set
+            {
+                inviteText = value;
+                if (currentText != null)
+                    currentText.GetComponent<Text>().text = inviteText;
             }
         }
     }
