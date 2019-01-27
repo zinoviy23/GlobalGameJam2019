@@ -20,6 +20,8 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
     [SerializeField] private string rightDoorName;
     [SerializeField] private string openedDoorLayer;
     [SerializeField] private string closedDoorLayer;
+    [SerializeField] private string playerLayerInElevator;
+    [SerializeField] private string playerLayer;
     [SerializeField] private float doorsOffset;
     
     private Transform prevObjectParent;
@@ -44,6 +46,8 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         yield return new WaitWhile(() => animatingCount != 0);
         
         StartCoroutine(AnimateTriggerMoving(triggerObject, transform.position));
+
+        triggerObject.GetComponent<SpriteRenderer>().sortingLayerName = playerLayerInElevator;
         
         yield return new WaitWhile(() => animatingCount != 0);
         
@@ -89,7 +93,19 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
             yield return null;
         }
 
+        StartCoroutine(AnimateDoor(leftDoorOnFloor, -doorsOffset, openedDoorLayer));
+        StartCoroutine(AnimateDoor(rightDoorOnFloor, doorsOffset, openedDoorLayer));
+
+        yield return new WaitWhile(() => animatingCount != 0);
+        
+        triggerObject.GetComponent<SpriteRenderer>().sortingLayerName = playerLayer;
+        
         StartCoroutine(AnimateTriggerMoving(triggerObject, transform.position + Vector3.left * 1.1f));
+        
+        yield return new WaitForSeconds(0.6f);
+        
+        StartCoroutine(AnimateDoor(leftDoorOnFloor, doorsOffset, closedDoorLayer));
+        StartCoroutine(AnimateDoor(rightDoorOnFloor, -doorsOffset, closedDoorLayer));
 
         yield return new WaitWhile(() => animatingCount != 0);
         
