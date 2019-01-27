@@ -48,6 +48,7 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         StartCoroutine(AnimateTriggerMoving(triggerObject, transform.position));
 
         triggerObject.GetComponent<SpriteRenderer>().sortingLayerName = playerLayerInElevator;
+        triggerObject.transform.localScale *= 0.7f;
         
         yield return new WaitWhile(() => animatingCount != 0);
         
@@ -59,7 +60,6 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         yield return new WaitWhile(() => animatingCount != 0);
         
         isExit = false;
-        
         
         currentText.SetActive(true);
         prevText = InviteText;
@@ -99,6 +99,7 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         yield return new WaitWhile(() => animatingCount != 0);
         
         triggerObject.GetComponent<SpriteRenderer>().sortingLayerName = playerLayer;
+        triggerObject.transform.localScale /= 0.7f;
         
         StartCoroutine(AnimateTriggerMoving(triggerObject, transform.position + Vector3.left * 1.1f));
         
@@ -153,15 +154,26 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         animatingCount++;
         if (wrapper != null)
             wrapper.value = true;
-
-        while (Math.Abs(obj.transform.position.x - point.x) > 0.001)
+        
+        SimpleWalker walker;
+        walker = obj.GetComponent<SimpleWalker>();
+        while (Math.Abs(obj.transform.position.x - point.x) > 0.01)
         {
             Vector3 moveResult = Vector3.MoveTowards(
                 new Vector3(obj.transform.position.x, 0),
                 new Vector3(point.x, 0),
                 5 * Time.fixedDeltaTime);
-            
+
             obj.transform.position = new Vector3(moveResult.x, obj.transform.position.y);
+
+            
+            if (walker != null)
+            {
+                if (point.x - obj.transform.position.x > 0.01)
+                    walker.Flip(false);
+                else if (point.x - obj.transform.position.x < -0.01)
+                    walker.Flip(true);
+            }
             
             yield return new WaitForFixedUpdate();
         }
@@ -170,6 +182,8 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         if (wrapper != null)
             wrapper.value = false;
     }
+    
+    
 
     class Wrapper
     {

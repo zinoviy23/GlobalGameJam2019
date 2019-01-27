@@ -22,6 +22,8 @@ namespace Interactive
 
         [SerializeField] private Vector2 textOffset;
 
+        [SerializeField] private Color initialTextColor;
+
         protected abstract IEnumerator Interact();
 
         private bool triggered;
@@ -65,7 +67,9 @@ namespace Interactive
                     yield return new WaitForSeconds(0.1f);
                     currentText = Instantiate(inviteTextPrefab, TextPosition, Quaternion.identity,
                         canvasObject.transform);
-                    currentText.GetComponent<Text>().text = InviteText;
+                    var text = currentText.GetComponent<Text>();
+                    text.text = InviteText;
+                    text.color = initialTextColor;
                     currentText.SetActive(true);
 
                     StartCoroutine(UpdateCurrentTextPosition());
@@ -116,6 +120,12 @@ namespace Interactive
                 if (currentText != null)
                     currentText.GetComponent<Text>().text = inviteText;
             }
+        }
+
+        public Color TextColor
+        {
+            get { return currentText.GetComponent<Text>().color; }
+            set { currentText.GetComponent<Text>().color = value; }
         }
 
         private void OnDrawGizmosSelected()
