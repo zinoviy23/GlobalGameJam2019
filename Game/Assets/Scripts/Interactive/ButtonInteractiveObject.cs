@@ -54,7 +54,7 @@ namespace Interactive
         IEnumerator TrackObject()
         {
             while (true)
-            {
+            {   
                 yield return new WaitWhile(() => interacting);
                 
                 if ((triggerObject.transform.position - transform.position).magnitude < triggerDistance && !triggered)
@@ -67,6 +67,8 @@ namespace Interactive
                         canvasObject.transform);
                     currentText.GetComponent<Text>().text = InviteText;
                     currentText.SetActive(true);
+
+                    StartCoroutine(UpdateCurrentTextPosition());
                     
                     Debug.Log("Created: " + currentText);
                 }
@@ -75,6 +77,8 @@ namespace Interactive
                 {
                     Debug.Log("Untriggered!");
                     triggered = false;
+                    
+                    StopCoroutine(nameof(UpdateCurrentTextPosition));
                     
                     Destroy(currentText);
                     currentText = null;
@@ -112,6 +116,32 @@ namespace Interactive
                 if (currentText != null)
                     currentText.GetComponent<Text>().text = inviteText;
             }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(transform.position + (Vector3)textOffset, Vector3.one * 0.5f);
+        }
+
+        IEnumerator UpdateCurrentTextPosition()
+        {
+            while (true)
+            {
+                if (currentText != null)
+                    currentText.gameObject.transform.position = TextPosition;
+
+                yield return null;
+            }
+        }
+
+        protected void DestroyThisObject()
+        {
+            if (currentText != null)
+                Destroy(currentText);
+            
+//            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

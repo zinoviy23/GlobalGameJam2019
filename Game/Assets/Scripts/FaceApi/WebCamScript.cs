@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FaceApi
 {
@@ -16,12 +17,12 @@ namespace FaceApi
         void Start()
         {
             webCamTexture = new WebCamTexture();
-            GetComponent<Renderer>().material.mainTexture = webCamTexture;
+            GetComponent<RawImage>().texture = webCamTexture;
             webCamTexture.Play();
 
             persistentDataPath = Application.persistentDataPath;
             
-            StartCoroutine(WriteTextureToFile());
+//            StartCoroutine(WriteTextureToFile());
         }
 
         public IEnumerator WriteTextureToFile()

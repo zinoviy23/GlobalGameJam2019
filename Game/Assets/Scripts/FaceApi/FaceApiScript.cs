@@ -12,12 +12,21 @@ namespace FaceApi
     [RequireComponent(typeof(WebCamScript))]
     public class FaceApiScript : MonoBehaviour
     {
+        public delegate void OnRequestHandler(FaceResult result);
+        
         private WebCamScript webCamScript;
 
-        IEnumerator AnalyzePicture()
+        public static event OnRequestHandler OnRequest;
+
+        public static bool used;
+        
+        public IEnumerator AnalyzePicture()
         {
+            yield return new WaitWhile(() => used);
+
+            used = true;
+            
             Debug.Log("Позируйте!");
-            yield return new WaitForSeconds(1);
             StartCoroutine(webCamScript.WriteTextureToFile());
             yield return new WaitForSeconds(1);
             try
@@ -29,13 +38,13 @@ namespace FaceApi
                 Debug.LogError(ex.Message);
             }
 
-            yield return new WaitForSeconds(4);
+            used = false;
         }
         // Start is called before the first frame update
         void Start()
         {
             webCamScript = GetComponent<WebCamScript>();
-            StartCoroutine(AnalyzePicture());
+//            StartCoroutine(AnalyzePicture());
         }
 
         // Update is called once per frame
@@ -70,7 +79,9 @@ namespace FaceApi
                     var contentString = await response.Content.ReadAsStringAsync();
 
                     var json = JsonConvert.DeserializeObject<List<FaceResult>>(contentString);
-                    
+
+                    OnRequest?.Invoke(json[0]);
+
                     Debug.Log(json[0]);
                 }
                 catch (Exception ex)
