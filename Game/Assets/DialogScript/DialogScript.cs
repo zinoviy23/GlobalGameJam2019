@@ -6,7 +6,7 @@ public class DialogScript : MonoBehaviour {
 
     //
     int condition;
-    TextScript textScript;
+    public TextScript textScript;
     int maxPhrase;
     public bool endDialog;
 
@@ -28,7 +28,7 @@ public class DialogScript : MonoBehaviour {
             if (condition == maxPhrase) endDialog = true;
             return textScript.getPhrase(condition);
         }
-        return "None";
+        return null;
 
     }
 
