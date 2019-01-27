@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   canvasObject: {fileID: 0}
   inviteTextPrefab: {fileID: 5739713190107312529, guid: 051a873156578804e87fc083bc9b0650,
     type: 3}
-  inviteText: To use elevator X
+  inviteText: "\u0425 \u0434\u043B\u044F \u0432\u0445\u043E\u0434\u0430 \u0432 \u043B\u0438\u0444\u0442"
   textOffset: {x: 0, y: 1}
   initialTextColor: {r: 0.8207547, g: 0, b: 0.03896013, a: 1}
   upButtonAxis: Vertical
@@ -109,7 +109,7 @@ MonoBehaviour:
   minFloor: -3
   currentFloor: 0
   floorHeight: 2.6
-  tip: up, dows, X exit
+  tip: "\u0432\u0432\u0435\u0440\u0445, \u0432\u043D\u0438\u0437, X \u0432\u044B\u0445\u043E\u0434"
   leftDoorName: Elevator Door Left
   rightDoorName: Elevator Door Right
   openedDoorLayer: Elevator Door Opened

@@ -13,8 +13,8 @@ public class TextScript {
 
     public TextScript(string[] mas)
     {
-        maxPhrase = masPhrase.Length;
         masPhrase = mas;
+        maxPhrase = masPhrase.Length;
     }
 
     public string getPhrase(int num)
@@ -25,6 +25,6 @@ public class TextScript {
 
     public int getMax()
     {
-        return masPhrase.Length;
+        return masPhrase.Length - 1;
     }
 }

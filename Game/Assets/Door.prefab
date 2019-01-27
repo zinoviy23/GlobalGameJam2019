@@ -51,15 +51,15 @@ MonoBehaviour:
   canvasObject: {fileID: 0}
   inviteTextPrefab: {fileID: 5739713190107312529, guid: 051a873156578804e87fc083bc9b0650,
     type: 3}
-  inviteText: X to open
+  inviteText: "X \u043E\u0442\u043A\u0440\u044B\u0442\u044C"
   textOffset: {x: 0, y: 1}
   initialTextColor: {r: 1, g: 0.9481132, b: 0.9481132, a: 1}
   isOpen: 0
   openedDoor: {fileID: 21300000, guid: 5e2cd7031f5e72745a6cc0ea83c08687, type: 3}
   closedDoor: {fileID: 21300000, guid: adb5af4cd5a65644eb305a0df3c27522, type: 3}
   width: 0.5
-  toOpenInvite: To open X
-  toCloseInvite: To close X
+  toOpenInvite: "X \u043E\u0442\u043A\u0440\u044B\u0442\u044C"
+  toCloseInvite: "X \u0437\u0430\u043A\u0440\u044B\u0442\u044C"
 --- !u!61 &8334320268552878753
 BoxCollider2D:
   m_ObjectHideFlags: 0

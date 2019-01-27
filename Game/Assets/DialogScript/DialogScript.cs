@@ -5,9 +5,9 @@ using UnityEngine;
 public class DialogScript : MonoBehaviour {
 
     //
-    int condition;
+    public int condition;
     public TextScript textScript;
-    int maxPhrase;
+    public int maxPhrase;
     public bool endDialog;
 
 	// Use this for initialization
