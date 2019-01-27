@@ -16,25 +16,50 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
     [SerializeField] private int currentFloor;
     [SerializeField] private float floorHeight;
     [SerializeField] private string tip;
-
+    [SerializeField] private string leftDoorName;
+    [SerializeField] private string rightDoorName;
+    [SerializeField] private string openedDoorLayer;
+    [SerializeField] private string closedDoorLayer;
+    [SerializeField] private float doorsOffset;
+    
     private Transform prevObjectParent;
     private bool isExit;
     private bool isRiding;
+    private int animatingCount;
     private string prevText;
+    
+    private SpriteRenderer leftDoorOnFloor;
+    private SpriteRenderer rightDoorOnFloor;
     
     protected override IEnumerator Interact()
     {
         StartInteracting();
-        yield return new WaitForSeconds(0.1f);
-        isExit = false;
-
         prevObjectParent = triggerObject.transform.parent;
         triggerObject.transform.parent = transform;
         triggerObject.GetComponent<SimpleWalker>().enabled = false;
+
+        StartCoroutine(AnimateDoor(leftDoorOnFloor, -doorsOffset, openedDoorLayer));
+        StartCoroutine(AnimateDoor(rightDoorOnFloor, doorsOffset, openedDoorLayer));
+
+        yield return new WaitWhile(() => animatingCount != 0);
+        
+        StartCoroutine(AnimateTriggerMoving(triggerObject, transform.position));
+        
+        yield return new WaitWhile(() => animatingCount != 0);
+        
+        yield return new WaitForSeconds(0.6f);
+        
+        StartCoroutine(AnimateDoor(leftDoorOnFloor, doorsOffset, closedDoorLayer));
+        StartCoroutine(AnimateDoor(rightDoorOnFloor, -doorsOffset, closedDoorLayer));
+
+        yield return new WaitWhile(() => animatingCount != 0);
+        
+        isExit = false;
+        
         
         currentText.SetActive(true);
-        prevText = currentText.GetComponent<Text>().text;
-        currentText.GetComponent<Text>().text = tip;
+        prevText = InviteText;
+        InviteText = tip;
 
         while (!isExit)
         {
@@ -44,6 +69,7 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
             {
                 StartCoroutine(Ride(1));
                 currentFloor++;
+                UpdateDoors();
                 continue;
             }
             
@@ -51,6 +77,7 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
             {
                 StartCoroutine(Ride(-1));
                 currentFloor--;
+                UpdateDoors();
                 continue;
             }
 
@@ -62,11 +89,25 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
             yield return null;
         }
 
-        currentText.GetComponent<Text>().text = prevText;
+        StartCoroutine(AnimateTriggerMoving(triggerObject, transform.position + Vector3.left * 1.1f));
+
+        yield return new WaitWhile(() => animatingCount != 0);
+        
+        InviteText = prevText;
         triggerObject.GetComponent<SimpleWalker>().enabled = true;
         triggerObject.transform.parent = prevObjectParent;
         yield return new WaitForSeconds(0.1f);
         FinishInteracting();
+    }
+
+    private void UpdateDoors()
+    {
+        var leftDoorObj = GameObject.Find($"{leftDoorName}{currentFloor}");
+        var rightDoorObj = GameObject.Find($"{rightDoorName}{currentFloor}");
+        
+        leftDoorOnFloor = leftDoorObj != null ? leftDoorObj.GetComponent<SpriteRenderer>() : null;
+
+        rightDoorOnFloor = rightDoorObj != null ? rightDoorObj.GetComponent<SpriteRenderer>() : null;
     }
 
     private IEnumerator Ride(float dir)
@@ -90,6 +131,48 @@ public class ElevatorEnterScript : Interactive.ButtonInteractiveObject
         currentText.SetActive(true);
         isRiding = false;
     }
-    
-    
+
+    IEnumerator AnimateTriggerMoving(GameObject obj, Vector3 point, Wrapper wrapper = null)
+    {
+        animatingCount++;
+        if (wrapper != null)
+            wrapper.value = true;
+
+        while (Math.Abs(obj.transform.position.x - point.x) > 0.001)
+        {
+            Vector3 moveResult = Vector3.MoveTowards(
+                new Vector3(obj.transform.position.x, 0),
+                new Vector3(point.x, 0),
+                5 * Time.fixedDeltaTime);
+            
+            obj.transform.position = new Vector3(moveResult.x, obj.transform.position.y);
+            
+            yield return new WaitForFixedUpdate();
+        }
+
+        animatingCount--;
+        if (wrapper != null)
+            wrapper.value = false;
+    }
+
+    class Wrapper
+    {
+        public bool value = true;
+    }
+
+    IEnumerator AnimateDoor(SpriteRenderer door, float offset, string layer)
+    {
+        door.sortingLayerName = layer;
+        
+        Wrapper wrapper = new Wrapper();;
+        StartCoroutine(AnimateTriggerMoving(door.gameObject, door.transform.position + Vector3.right * offset,
+            wrapper));
+        
+        yield return new WaitWhile(() => wrapper.value);
+    }
+
+    private void Awake()
+    {
+        UpdateDoors();
+    }
 }

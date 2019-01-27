@@ -57,9 +57,6 @@ namespace Interactive
             {
                 yield return new WaitWhile(() => interacting);
                 
-                if (currentText != null)
-                    Debug.Log(currentText.transform.position + " " + transform.position);
-                
                 if ((triggerObject.transform.position - transform.position).magnitude < triggerDistance && !triggered)
                 {
                     Debug.Log("Triggered");
@@ -68,7 +65,7 @@ namespace Interactive
                     yield return new WaitForSeconds(0.1f);
                     currentText = Instantiate(inviteTextPrefab, TextPosition, Quaternion.identity,
                         canvasObject.transform);
-                    currentText.GetComponent<Text>().text = inviteText;
+                    currentText.GetComponent<Text>().text = InviteText;
                     currentText.SetActive(true);
                     
                     Debug.Log("Created: " + currentText);
@@ -85,6 +82,7 @@ namespace Interactive
 
                 if (triggered && Input.GetButton(triggerButton))
                 {
+                    Debug.Log("Interact");
                     StartCoroutine(Interact());
                 }
 
@@ -103,6 +101,17 @@ namespace Interactive
                 return textPosition;
             }
         }
-        
+
+
+        public string InviteText
+        {
+            get { return inviteText; }
+            set
+            {
+                inviteText = value;
+                if (currentText != null)
+                    currentText.GetComponent<Text>().text = inviteText;
+            }
+        }
     }
 }
