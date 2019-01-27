@@ -66,6 +66,8 @@ namespace Doctor
 
         public void SetText(params string[] str)
         {
+            dialog = GetComponent<DialogScript>();
+            
             dialog.textScript = new TextScript(str);
             dialog.maxPhrase = str.Length - 1;
         }
