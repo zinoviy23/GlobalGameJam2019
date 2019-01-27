@@ -17,7 +17,9 @@ public class DoorScript : Interactive.ButtonInteractiveObject
     protected override IEnumerator Interact()
     {
         StartInteracting();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
+        triggerObject.GetComponent<SimpleWalker>().Click();
+        yield return new WaitForSeconds(0.3f);
         IsOpen = !IsOpen;
         yield return new WaitForSeconds(0.5f);
         FinishInteracting();
